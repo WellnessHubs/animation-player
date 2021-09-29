@@ -9,6 +9,14 @@
 
 	<body>
     <script>
+      var hash = window.location.hash.replace("#","");
+      var args = hash.split(",")
+      var fbxfile = args[0] || "ybot.fbx"
+      var bvhfile = args[1] || "ri-redo.bvh"
+      var zoomLevel = args[2] || null;
+      if(zoomLevel){
+        zoomLevel = parseFloat(zoomLevel);
+      }
       var model;
       var animation;
       var animationDuration;
@@ -81,12 +89,14 @@
 
 				// model
 				const loader = new FBXLoader();
-		//		loader.load( 'models/fbx/Ch14_nonPBR.fbx', function ( object ) {
-				loader.load( 'models/fbx/ybot_1.fbx', function ( object ) {
+			//	loader.load( 'models/fbx/Ch14_nonPBR.fbx', function ( object ) {
+				loader.load( 'models/fbx/' + fbxfile , function ( object ) {
 
           model = object;
 
-//object.scale.multiplyScalar(.47); 
+        if(zoomLevel){
+          object.scale.multiplyScalar(zoomLevel); 
+        }
 
 					mixer = new THREE.AnimationMixer( object );
 
@@ -104,17 +114,18 @@
 
 					scene.add( object );
 
+/*
     scene.traverse(function (child) {
       console.log(child);
     });
-
+*/
             init_bvh();
             animate_bvh();
           const loader_bvh = new BVHLoader();
         //  loader_bvh.load( "models/bvh/Ri_BVH-3-standing.bvh", function ( result ) {
-         loader_bvh.load( "models/bvh/ri-redo.bvh", function ( result ) {
+         loader_bvh.load( "models/bvh/" + bvhfile, function ( result ) {
 
-            console.log(result)
+            //console.log(result)
             animationDuration = result.clip.duration
 
             skeletonHelper_bvh = new THREE.SkeletonHelper( result.skeleton.bones[ 0 ] );
@@ -204,7 +215,7 @@
 
         if ( mixer_bvh ){
          mixer_bvh.update( delta );
-         console.log(mixer_bvh.time);
+        // console.log(mixer_bvh.time);
          if(mixer_bvh.time>=animationDuration){
             animation.paused=true;
             animation.time=animationDuration;
