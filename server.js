@@ -16,4 +16,8 @@ app.use(express.static(__dirname + '/docs'));
 app.use(errorHandler());
 
 console.log("Simple static server listening at http://" + hostname + ":" + port);
-app.listen(port);
+//app.listen(port);
+// DO NOT DO app.listen() unless we're testing this directly
+if (require.main === module) { app.listen(1234); }
+// Instead do export the app:
+else{ module.exports = app; }
