@@ -161,8 +161,6 @@
 
 				const controls = new OrbitControls( camera, renderer.domElement );
 				controls.target.set( 0, 100, 0 );
-        controls.enableZoom = false;
-
 				controls.update();
 
 				window.addEventListener( 'resize', onWindowResize, false );
@@ -224,37 +222,40 @@
          }
         }
 
+function setB(bn, ang){
+    bn.quaternion.set(ang.x, ang.y, ang.z, ang.w);
+}
     scene_bvh.traverse(function (child) {
        if(child.type === "Bone"){
               if(child.name === "LeftArm"){
                 var q = child.quaternion
                   var bn = model.getObjectByName( 'mixamorigLeftArm' );
-                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                setB(bn, child.quaternion);
               }
               else if(child.name === "LeftForeArm"){
                 var q = child.quaternion
                   var bn = model.getObjectByName( 'mixamorigLeftForeArm' );
-                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                setB(bn, child.quaternion);
               }
               else if(child.name === "LeftHand"){
                 var q = child.quaternion
                   var bn = model.getObjectByName( 'mixamorigLeftHand' );
-                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                setB(bn, child.quaternion);
               }
               else if(child.name === "LeftUpLeg"){
                 var q = child.quaternion
                   var bn = model.getObjectByName( 'mixamorigLeftUpLeg' );
-                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                setB(bn, child.quaternion);
               }
               else if(child.name === "LeftLeg"){
                 var q = child.quaternion
                   var bn = model.getObjectByName( 'mixamorigLeftLeg' );
-                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                setB(bn, child.quaternion);
               }
               else if(child.name === "LeftFoot"){
                 var q = child.quaternion
                   var bn = model.getObjectByName( 'mixamorigLeftFoot' );
-                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                setB(bn, child.quaternion);
               }
               else if(child.name === "LeftShoulder"){
                 var q = child.quaternion
